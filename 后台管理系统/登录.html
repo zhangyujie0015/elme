@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head lang="en">
+		<meta charset="UTF-8">
+		<title>后台管理系统-登录</title>
+		<link rel="stylesheet" href="css/denglu.css" />
+		<script type="text/javascript" src="./js/jquery-1.12.3.min.js"></script>
+	</head>
+	<body>
+		<section class="form_contianer" style="">
+			<div class="manage_tip">
+				<h1>elm后台管理系统</h1>
+			</div>
+			<form class="el-form">
+				<div class="el-form-item is-required">
+					<div class="el-form-item__content">
+						<div class="el-input">
+							<input autocomplete="off" placeholder="用户名" type="text" rows="2" validateevent="true" class="el-input__inner">
+						</div>
+					</div>
+				</div>
+				<div class="el-form-item is-required">
+					<div class="el-form-item__content">
+						<div class="el-input">
+							<input autocomplete="off" placeholder="密码" type="password" rows="2" validateevent="true" class="el-input__inner">
+						</div>
+					</div>
+				</div>
+				<div class="el-form-item">
+					<div class="el-form-item__content"><button id="btn" type="button" class="el-button submit_btn el-button--primary">
+						<span>登陆</span></button>
+					</div>
+				</div>
+			</form>
+			<p class="tip">温馨提示：</p>
+			<p class="tip">未登录过的新用户，自动注册</p>
+			<p class="tip">注册过的用户可凭账号密码登录</p>
+		</section>
+	</body>
+</html>
+<script type="text/javascript" src="js/network.js"></script>
+<script type="text/javascript">
+	document.getElementById("btn").addEventListener('click', function() {
+		var psw = $('#num').val();
+		var phone=document.cookie.split(";")[0].split("=")[1];
+		if (psw == '') {
+			mui.alert('不能为空', '系统提示');
+			return false;
+		}
+		$.ajax({
+			type:"get",
+			url:"http://172.16.53.27:3000/login/cellphone?",
+			data:{
+				phone:phone,
+				password:psw
+			},
+			success:function(data){
+					console.log(data)
+					if(data.code==200){
+						location.href='index.html';
+					}else{
+						mui.alert('登录超时')
+					}
+			}
+		})
+	});
+	// var data = {}
+	// getDataByGet("/dj/toplist/newcomer?limit=99",data,function(data){
+	//   var data2=data.data.list
+	//   console.log(data2);
+	//   for (var i = 0; i < data2.length; i++) {
+		
+	// 	}
+	// });
+</script>
